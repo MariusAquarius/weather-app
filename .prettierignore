@@ -1,0 +1,13 @@
+package-lock.json
+.vscode
+.idea
+
+node_modules
+
+.eslintrc.json
+package.json
+.prettierrc.json
+
+**/*.svg
+**/*.png
+**/*.jpg
