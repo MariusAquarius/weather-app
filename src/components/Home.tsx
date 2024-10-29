@@ -1,36 +1,31 @@
-import React, { ReactElement } from "react"
-import { updateProduct, useDispatch } from "../lib/redux"
+import React, { ReactElement, useEffect } from "react"
+import { selectWeather, updateWeather, useDispatch, useGetWeatherForBerlinQuery, useSelector } from "../lib/redux"
+import { Weather } from "../lib/api-types"
 
 export default function Home(): ReactElement {
   const dispatch = useDispatch()
 
-  const examplePayload = {
-    idOfProductToUpdate: "0",
-    newProduct: {
-      id: "1",
-      name: "cake",
-    },
-  }
+  const { data, error, isSuccess } = useGetWeatherForBerlinQuery()
+
+  const currentWeather: Weather | null = useSelector(selectWeather)
+
+  useEffect(() => {
+    dispatch(updateWeather({ newWeather: data }))
+  }, [data])
 
   return (
     <header className="App-header">
+      <a
+        className="App-link"
+        onClick={() => dispatch(updateWeather({ newWeather: data }))}
+      >
+        update WeatherState
+      </a>
       <p>
-        Edit <code>src/App.tsx</code> and save to reload.
+        {data 
+        ? data.hourly.temperature_2m[0]
+        : "weather is not updated"}
       </p>
-      <a
-        className="App-link"
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Learn React
-      </a>
-      <a
-        className="App-link"
-        onClick={() => dispatch(updateProduct(examplePayload))}
-      >
-        update state value
-      </a>
     </header>
   )
 }
