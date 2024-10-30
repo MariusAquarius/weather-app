@@ -3,18 +3,27 @@ import {
   selectWeather,
   useGetWeatherForBerlinQuery,
   useSelector,
+  useDispatch,
+  weatherApi,
 } from "../lib/redux"
 import { Weather } from "../lib/api-types"
-import { Button } from "./ui/button"
+import ButtonWA from "./lib/ButtonWA"
 
 export default function Home(): ReactElement {
-  useGetWeatherForBerlinQuery()
-
+  const dispatch = useDispatch()
   const currentWeather: Weather | null = useSelector(selectWeather)
+
+  const { isLoading } = useGetWeatherForBerlinQuery()
+
+  function handleRefreshButtonClick(): void {
+    dispatch(weatherApi.util.resetApiState())
+  }
 
   return (
     <header className="min-h-screen flex flex-col items-center justify-center">
-      <Button></Button>
+      <ButtonWA isLoading={isLoading} onClick={handleRefreshButtonClick}>
+        Refresh
+      </ButtonWA>
       <p>
         {currentWeather
           ? currentWeather.hourly.temperature_2m[0]
