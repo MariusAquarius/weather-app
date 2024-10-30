@@ -8,6 +8,9 @@ export default [
     files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"],
   },
   {
+    ignores: ["**/shadcn/ui/*.tsx"],
+  },
+  {
     languageOptions: {
       globals: globals.browser,
     },

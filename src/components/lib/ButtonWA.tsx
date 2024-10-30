@@ -15,7 +15,11 @@ export default function ButtonWA({
   children,
 }: PropsWithChildren<ButtonProps>): ReactElement {
   return (
-    <Button disabled={isLoading || disabled} onClick={onClick}>
+    <Button
+      disabled={isLoading || disabled}
+      onClick={onClick}
+      variant="secondary"
+    >
       {isLoading ? <Spinner /> : null}
       {children}
     </Button>
