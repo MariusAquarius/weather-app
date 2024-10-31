@@ -51,6 +51,15 @@ export type CurrentWeatherAttributes = {
 //units
 export type TempUnits = "°C" | "°F"
 export type TimeZone = "GMT" | "UST" | "CEST"
+export type CardinalDirection =
+  | "N"
+  | "NE"
+  | "E"
+  | "SE"
+  | "S"
+  | "SW"
+  | "W"
+  | "NW"
 export type WMOCode =
   | 0
   | 1

@@ -1,4 +1,5 @@
 import {
+  CardinalDirection,
   CurrentWeather,
   CurrentWeatherContent,
   HourlyWeather,
@@ -7,6 +8,7 @@ import {
 } from "../../../api-types"
 import { ReduxState } from "../../store"
 import { WeatherState } from "./weather-slice"
+import { getDirection } from "./utils"
 
 // general
 export const selectWeatherState = (state: ReduxState): WeatherState =>
@@ -48,8 +50,16 @@ export const selectCurrentWindSpeed = (state: ReduxState): number | null =>
 export const selectCurrentWindGusts = (state: ReduxState): number | null =>
   selectCurrent(state)?.wind_speed_10m ?? null
 
-export const selectCurrentWindDirection = (state: ReduxState): number | null =>
-  selectCurrent(state)?.wind_speed_10m ?? null
+export const selectCurrentWindDirection = (
+  state: ReduxState,
+): CardinalDirection | null => {
+  const directionInDegrees = selectCurrent(state)?.wind_speed_10m
+  if (directionInDegrees !== undefined) {
+    return getDirection(directionInDegrees)
+  } else {
+    return null
+  }
+}
 
 export const selectCurrentPrecipitationProbability = (
   state: ReduxState,
@@ -57,8 +67,11 @@ export const selectCurrentPrecipitationProbability = (
 
 export const selectIsCurrentlyDay = (state: ReduxState): boolean | null => {
   const isDay = selectCurrent(state)?.is_day
-  if (isDay !== undefined) return Boolean(isDay)
-  else return null
+  if (isDay !== undefined) {
+    return Boolean(isDay)
+  } else {
+    return null
+  }
 }
 
 // hourly weather
