@@ -57,7 +57,7 @@ export const {
 } = weatherSlice.actions
 
 // API SLICE
-const meteoApiBaseUrl = "https://api.open-meteo.com/v1/forecast"
+const meteoWeatherApiBaseUrl = "https://api.open-meteo.com/v1/forecast"
 
 const currentWeatherParams = [
   "temperature_2m",
@@ -74,7 +74,7 @@ const currentWeatherParams = [
 
 export const weatherApi = createApi({
   reducerPath: "weatherApi",
-  baseQuery: fetchBaseQuery({ baseUrl: meteoApiBaseUrl }),
+  baseQuery: fetchBaseQuery({ baseUrl: meteoWeatherApiBaseUrl }),
   tagTypes: ["weather"],
   endpoints: builder => ({
     getCurrentWeatherForBerlin: builder.query<CurrentWeather, void>({
