@@ -1,11 +1,29 @@
 import React, { ReactElement } from "react"
 
-export default function Spinner(): ReactElement {
+type SpinnerProps = {
+  size?: "sm" | "md" | "lg" | "xl"
+}
+
+export default function Spinner({ size }: SpinnerProps): ReactElement {
+  function getSize(): string {
+    switch (size) {
+      case "xl":
+        return "w-24 h-24"
+      case "lg":
+        return "w-16 h-16"
+      case "md":
+        return "w-12 h-12"
+      case "sm":
+      default:
+        return "w-8 h-8"
+    }
+  }
+
   return (
     <div role="status">
       <svg
         aria-hidden="true"
-        className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+        className={getSize() + " text-dark-gray animate-spin fill-light-gray"}
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

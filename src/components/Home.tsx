@@ -13,7 +13,7 @@ export default function Home(): ReactElement {
       <div className="px-14">
         <Separator orientation="horizontal" className="bg-dark-gray" />
       </div>
-      <WeatherContent />
+      <WeatherContent isLoading={isLoading} />
     </div>
   )
 }

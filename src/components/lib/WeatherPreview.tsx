@@ -11,7 +11,7 @@ export default function WeatherPreview(): ReactElement {
       <div>
         <WeatherIcon weatherType="sunny" dayTime="day" size={160} />
       </div>
-      <div className="flex flex-col">
+      <div className="flex flex-col py-2">
         <PreviewTemperature>{currentTemperature}</PreviewTemperature>
       </div>
     </div>
