@@ -5,6 +5,7 @@ import {
   selectApparentTemperature,
   selectCurrentHumidity,
   selectCurrentPrecipitation,
+  selectCurrentWindGusts,
   selectCurrentWindSpeed,
   useSelector,
 } from "../../lib/redux"
@@ -18,21 +19,32 @@ export default function WeatherInfo(): ReactElement {
   const humidity: number | null = useSelector(selectCurrentHumidity)
   const precipitation: number | null = useSelector(selectCurrentPrecipitation)
   const windSpeed: number | null = useSelector(selectCurrentWindSpeed)
+  const windGusts: number | null = useSelector(selectCurrentWindGusts)
+  //const windDirection: number | null = useSelector(selectCurrentWindDirection)
 
   return (
     <div className="flex flex-col h-full w-[50vw] justify-start">
       <div>
-        Feels like: <Temperature>{apparentTemperature}</Temperature>
+        <span className="text-light-gray">Feels like: </span>
+        <Temperature>{apparentTemperature}</Temperature>
       </div>
       <div>
-        Humidity: <Humidity>{humidity}</Humidity>
+        <span className="text-light-gray">Humidity: </span>
+        <Humidity>{humidity}</Humidity>
       </div>
       <div>
-        Precepitation: <Rainfall>{precipitation}</Rainfall>
+        <span className="text-light-gray">Precepitation: </span>
+        <Rainfall>{precipitation}</Rainfall>
       </div>
       <div>
-        Wind speed: <Velocity>{windSpeed}</Velocity>{" "}
-        <span className="text-gray">(10m above ground)</span>
+        <span className="text-light-gray">Wind speed: </span>
+        <Velocity>{windSpeed}</Velocity>
+        <span className="text-gray"> (10m above ground)</span>
+      </div>
+      <div>
+        <span className="text-light-gray">Wind gusts: </span>
+        <Velocity>{windGusts}</Velocity>
+        <span className="text-gray"> (10m above ground)</span>
       </div>
     </div>
   )

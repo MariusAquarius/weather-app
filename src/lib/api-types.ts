@@ -11,6 +11,43 @@ export type WeatherBase = {
 
 export type Weather = HourlyWeather | CurrentWeather
 
+//hourly
+export type HourlyWeather = WeatherBase & HourlyWeatherAttributes
+
+export type HourlyWeatherContent = {
+  time: string[]
+  temperature_2m: number[]
+}
+
+export type HourlyWeatherAttributes = {
+  hourly: HourlyWeatherContent
+  hourly_units: {
+    temperature_2m: TempUnits
+  }
+}
+
+//current
+export type CurrentWeather = WeatherBase & CurrentWeatherAttributes
+
+export type CurrentWeatherContent = {
+  temperature_2m: number
+  relative_humidity_2m: number
+  apparent_temperature: number
+  is_day: number
+  precipitation: number
+  weather_code: WMOCode
+  wind_speed_10m: number
+  wind_gusts_10m: number
+}
+
+export type CurrentWeatherAttributes = {
+  current: CurrentWeatherContent
+  current_units: {
+    temperature_2m: TempUnits
+  }
+}
+
+//units
 export type TempUnits = "°C" | "°F"
 export type TimeZone = "GMT" | "UST" | "CEST"
 export type WMOCode =
@@ -42,38 +79,3 @@ export type WMOCode =
   | 95
   | 96
   | 99
-
-//hourly
-export type HourlyWeather = WeatherBase & HourlyWeatherAttributes
-
-export type HourlyWeatherContent = {
-  time: string[]
-  temperature_2m: number[]
-}
-
-export type HourlyWeatherAttributes = {
-  hourly: HourlyWeatherContent
-  hourly_units: {
-    temperature_2m: TempUnits
-  }
-}
-
-//current
-export type CurrentWeather = WeatherBase & CurrentWeatherAttributes
-
-export type CurrentWeatherContent = {
-  temperature_2m: number
-  relative_humidity_2m: number
-  apparent_temperature: number
-  is_day: number
-  precipitation: number
-  weather_code: WMOCode
-  wind_speed_10m: number
-}
-
-export type CurrentWeatherAttributes = {
-  current: CurrentWeatherContent
-  current_units: {
-    temperature_2m: TempUnits
-  }
-}
