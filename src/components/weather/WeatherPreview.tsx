@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react"
 import { selectTemperatureNow, useSelector } from "../../lib/redux"
 import WeatherIcon from "./WeatherIcon"
-import { PreviewTemperature } from "./PreviewTemperature"
+import { PreviewTemperature } from "../lib/PreviewTemperature"
 
 export default function WeatherPreview(): ReactElement {
   const currentTemperature = useSelector(selectTemperatureNow)

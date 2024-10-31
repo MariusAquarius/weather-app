@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react"
 import { useGetWeatherForBerlinQuery } from "../lib/redux"
-import WeatherContent from "./lib/WeatherContent"
+import WeatherContent from "./weather/WeatherContent"
 import Header from "./lib/Header"
 import { Separator } from "./shadcn/ui/separator"
 

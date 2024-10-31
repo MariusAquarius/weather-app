@@ -1,8 +1,8 @@
 import React, { ReactElement } from "react"
+import { Separator } from "../shadcn/ui/separator"
+import Spinner from "../lib/Spinner"
 import WeatherPreview from "./WeatherPreview"
 import WeatherInfo from "./WeatherInfo"
-import { Separator } from "../shadcn/ui/separator"
-import Spinner from "./Spinner"
 
 type WeatherContentProps = {
   isLoading?: boolean

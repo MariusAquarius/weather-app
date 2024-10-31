@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react"
-import { Temperature } from "./Temperature"
+import { Temperature } from "../lib/Temperature"
 
 export default function WeatherInfo(): ReactElement {
   return (
