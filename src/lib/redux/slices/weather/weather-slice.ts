@@ -55,7 +55,7 @@ export const {
 // API SLICE
 const meteoWeatherApiBaseUrl = "https://api.open-meteo.com/v1/forecast"
 
-const currentWeatherParams = [
+const weatherApiParams = [
   "temperature_2m",
   "relative_humidity_2m",
   "apparent_temperature",
@@ -75,7 +75,7 @@ export const weatherApi = createApi({
   endpoints: builder => ({
     getCurrentWeatherForBerlin: builder.query<CurrentWeather, void>({
       query: () =>
-        `?latitude=52.5244&longitude=13.4105&current=${currentWeatherParams.map(param => param + ",")}`,
+        `?latitude=52.5244&longitude=13.4105&current=${weatherApiParams.map(param => param + ",")}`,
       onQueryStarted: async (_, { queryFulfilled, dispatch }) => {
         try {
           const { data } = await queryFulfilled
@@ -84,7 +84,7 @@ export const weatherApi = createApi({
           dispatch(updateWeatherApiError({ isApiError: false }))
         } catch (error) {
           console.error("An error occured while fetching weather api: ", error)
-          dispatch(updateWeatherApiError({ isApiError: false }))
+          dispatch(updateWeatherApiError({ isApiError: true }))
         }
       },
     }),
@@ -93,7 +93,7 @@ export const weatherApi = createApi({
       { lat: number; long: number }
     >({
       query: coords =>
-        `?latitude=${coords.lat}&longitude=${coords.long}&current=${currentWeatherParams.map(param => param + ",")}`,
+        `?latitude=${coords.lat}&longitude=${coords.long}&current=${weatherApiParams.map(param => param + ",")}`,
       providesTags: ["weather"],
       onQueryStarted: async (_, { queryFulfilled, dispatch }) => {
         try {
@@ -103,7 +103,7 @@ export const weatherApi = createApi({
           dispatch(updateWeatherApiError({ isApiError: false }))
         } catch (error) {
           console.error("An error occured while fetching weather api: ", error)
-          dispatch(updateWeatherApiError({ isApiError: false }))
+          dispatch(updateWeatherApiError({ isApiError: true }))
         }
       },
     }),
@@ -117,7 +117,7 @@ export const weatherApi = createApi({
           dispatch(updateWeatherApiError({ isApiError: false }))
         } catch (error) {
           console.error("An error occured while fetching weather api: ", error)
-          dispatch(updateWeatherApiError({ isApiError: false }))
+          dispatch(updateWeatherApiError({ isApiError: true }))
         }
       },
     }),
@@ -136,7 +136,7 @@ export const weatherApi = createApi({
           dispatch(updateWeatherApiError({ isApiError: false }))
         } catch (error) {
           console.error("An error occured while fetching weather api: ", error)
-          dispatch(updateWeatherApiError({ isApiError: false }))
+          dispatch(updateWeatherApiError({ isApiError: true }))
         }
       },
     }),

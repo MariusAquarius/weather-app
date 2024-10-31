@@ -1,19 +1,24 @@
 import React, { ReactElement } from "react"
-import { useGetCurrentWeatherForBerlinQuery } from "../lib/redux"
+import {
+  selectDoesCityDataExist,
+  useGetCurrentWeatherForBerlinQuery,
+  useSelector,
+} from "../lib/redux"
 import WeatherContent from "./weather/WeatherContent"
 import Header from "./lib/Header"
 import { Separator } from "./shadcn/ui/separator"
 
 export default function Home(): ReactElement {
   const { isLoading } = useGetCurrentWeatherForBerlinQuery()
+  const isCityExisting = useSelector(selectDoesCityDataExist)
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Header isLoading={isLoading} />
+      <Header />
       <div className="px-14">
         <Separator orientation="horizontal" className="bg-dark-gray" />
       </div>
-      <WeatherContent isLoading={isLoading} />
+      <WeatherContent isDisabled={!isCityExisting} isLoading={isLoading} />
     </div>
   )
 }

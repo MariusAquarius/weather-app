@@ -8,23 +8,23 @@ import {
   selectIsSearchTermUpdated,
   selectSearchTerm,
   updateLastSearched,
+  useLazyGetCoordinatesOfCityQuery,
 } from "../../lib/redux"
 import { RefreshCw, Search } from "lucide-react"
 import SearchBar from "./SearchBar"
 
-type HeaderProps = {
-  isLoading?: boolean
-}
-
-export default function Header({ isLoading }: HeaderProps): ReactElement {
+export default function Header(): ReactElement {
   const dispatch = useDispatch()
   const isSearchValue = useSelector(selectIsSearchValue)
   const searchTerm = useSelector(selectSearchTerm)
   const isSearchTermUpdated = useSelector(selectIsSearchTermUpdated)
 
+  const [triggerGeoApi, { isLoading }] = useLazyGetCoordinatesOfCityQuery()
+
   function handleSearchButtonClick(): void {
     if (isSearchValue && isSearchTermUpdated) {
       dispatch(updateLastSearched({ lastSearched: searchTerm }))
+      triggerGeoApi(searchTerm)
     } else {
       dispatch(weatherApi.util.resetApiState())
     }

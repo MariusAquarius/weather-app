@@ -4,7 +4,7 @@ import {
   useDispatch as useReduxDispatch,
   TypedUseSelectorHook,
 } from "react-redux"
-import { citySlice, weatherApi, weatherSlice } from "./slices"
+import { cityApi, citySlice, weatherApi, weatherSlice } from "./slices"
 
 export type ReduxStore = typeof reduxStore
 export type ReduxState = ReturnType<typeof reduxStore.getState>
@@ -18,13 +18,17 @@ const reducer = {
   weather: weatherSlice.reducer,
   city: citySlice.reducer,
   [weatherApi.reducerPath]: weatherApi.reducer,
+  [cityApi.reducerPath]: cityApi.reducer,
 }
 
 export function setupStore() {
   return configureStore({
     reducer,
     middleware: getDefaultMiddleware =>
-      getDefaultMiddleware().concat(weatherApi.middleware),
+      getDefaultMiddleware().concat([
+        weatherApi.middleware,
+        cityApi.middleware,
+      ]),
   })
 }
 

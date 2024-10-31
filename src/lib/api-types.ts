@@ -11,7 +11,18 @@ export type WeatherBase = {
 
 export type Weather = HourlyWeather | CurrentWeather
 
-//hourly
+//search
+export type CityResponse = {
+  results: City[]
+}
+export type City = {
+  longitude: number
+  latitude: number
+  name: string
+  country: string
+}
+
+//hourly weather
 export type HourlyWeather = WeatherBase & HourlyWeatherAttributes
 
 export type HourlyWeatherContent = {
@@ -26,7 +37,7 @@ export type HourlyWeatherAttributes = {
   }
 }
 
-//current
+//current weather
 export type CurrentWeather = WeatherBase & CurrentWeatherAttributes
 
 export type CurrentWeatherContent = {
@@ -48,7 +59,14 @@ export type CurrentWeatherAttributes = {
   }
 }
 
-//units
+//misc
+export type CityInfo = {
+  long: number | null
+  lat: number | null
+  city: string | null
+  country: string | null
+}
+
 export type TempUnits = "°C" | "°F"
 export type TimeZone = "GMT" | "UST" | "CEST"
 export type CardinalDirection =
