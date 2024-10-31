@@ -28,7 +28,7 @@ export default function WeatherInfo(): ReactElement {
   )
 
   return (
-    <div className="flex h-full w-[50vw] justify-center lg:justify-start">
+    <div className="flex h-full justify-center lg:justify-start">
       <div className="flex flex-row gap-4 md:gap-12">
         <div className="flex flex-col justify-center lg:justify-start gap-2">
           <span className="text-light-gray">Feels like</span>

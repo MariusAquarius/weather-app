@@ -3,6 +3,7 @@ import { Separator } from "../shadcn/ui/separator"
 import Spinner from "../lib/Spinner"
 import WeatherPreview from "./WeatherPreview"
 import WeatherInfo from "./WeatherInfo"
+import { selectCityName, selectCountry, useSelector } from "../../lib/redux"
 
 type WeatherContentProps = {
   isLoading?: boolean
@@ -13,22 +14,30 @@ export default function WeatherContent({
   isLoading,
   isDisabled,
 }: WeatherContentProps): ReactElement {
+  const city = useSelector(selectCityName)
+  const country = useSelector(selectCountry)
+
   function getWeatherContent(): ReactElement {
     if (isDisabled) {
-      return <div>Enter search value</div>
+      return <div className="text-xl">Please enter a search value</div>
     } else {
       return (
         <>
           {isLoading ? (
             <Spinner size="xl" />
           ) : (
-            <>
-              <WeatherPreview />
-              <div className="h-[20vh] hidden lg:block">
-                <Separator orientation="vertical" className="bg-dark-gray" />
+            <div className="flex flex-col items-center justify-center gap-8">
+              <div className="text-xl">
+                Weather in {city}, {country}
               </div>
-              <WeatherInfo />
-            </>
+              <div className="flex flex-col lg:flex-row gap-2 lg:gap-10">
+                <WeatherPreview />
+                <div className="h-[20vh] hidden lg:block">
+                  <Separator orientation="vertical" className="bg-dark-gray" />
+                </div>
+                <WeatherInfo />
+              </div>
+            </div>
           )}
         </>
       )
@@ -39,7 +48,7 @@ export default function WeatherContent({
   //also check if weather api is loading here to replace isLoading prop
 
   return (
-    <div className="flex flex-col lg:flex-row min-h-[50vh] items-center justify-center gap-2 lg:gap-10 px-40">
+    <div className="flex flex-col min-h-[50vh] items-center justify-center px-40">
       {getWeatherContent()}
     </div>
   )

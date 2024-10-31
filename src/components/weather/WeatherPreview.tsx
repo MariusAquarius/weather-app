@@ -17,7 +17,7 @@ export default function WeatherPreview(): ReactElement {
   const isDay = useSelector(selectIsCurrentlyDay) ?? true
 
   return (
-    <div className="flex flex-row h-full w-[50vw] justify-center lg:justify-end">
+    <div className="flex flex-row h-full justify-center lg:justify-end">
       <div>
         <WeatherIcon weatherType="sunny" isDay={isDay} size={160} />
       </div>
