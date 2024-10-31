@@ -19,6 +19,7 @@ export default function ButtonWA({
       disabled={isLoading || disabled}
       onClick={onClick}
       variant="secondary"
+      className="bg-light-gray"
     >
       {isLoading ? <Spinner /> : null}
       {children}

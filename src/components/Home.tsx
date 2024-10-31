@@ -1,28 +1,19 @@
 import React, { ReactElement } from "react"
-import {
-  useGetWeatherForBerlinQuery,
-  useDispatch,
-  weatherApi,
-  updateCurrentTime,
-} from "../lib/redux"
-import ButtonWA from "./lib/ButtonWA"
-import WeatherContent from "./lib/WeatherPreview"
+import { useGetWeatherForBerlinQuery } from "../lib/redux"
+import WeatherContent from "./lib/WeatherContent"
+import Header from "./lib/Header"
+import { Separator } from "./shadcn/ui/separator"
 
 export default function Home(): ReactElement {
-  const dispatch = useDispatch()
   const { isLoading } = useGetWeatherForBerlinQuery()
 
-  function handleRefreshButtonClick(): void {
-    dispatch(updateCurrentTime())
-    dispatch(weatherApi.util.resetApiState())
-  }
-
   return (
-    <header className="min-h-screen flex flex-col items-center justify-center">
-      <ButtonWA isLoading={isLoading} onClick={handleRefreshButtonClick}>
-        Refresh
-      </ButtonWA>
+    <div className="min-h-screen flex flex-col">
+      <Header isLoading={isLoading} />
+      <div className="px-14">
+        <Separator orientation="horizontal" className="bg-dark-gray" />
+      </div>
       <WeatherContent />
-    </header>
+    </div>
   )
 }
