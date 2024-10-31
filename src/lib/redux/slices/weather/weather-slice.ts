@@ -1,15 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
-import { Weather } from "../../../api-types"
+import { CurrentWeather, HourlyWeather } from "../../../api-types"
 
 // REDUX SLICE
 export type WeatherState = {
-  weather: Weather | null
+  currentWeather: CurrentWeather | null
+  hourlyWeather: HourlyWeather | null
   isApiError: boolean
   time: number
 }
 const initialState: WeatherState = {
-  weather: null,
+  currentWeather: null,
+  hourlyWeather: null,
   isApiError: false,
   time: Date.now(),
 }
@@ -17,13 +19,21 @@ export const weatherSlice = createSlice({
   name: "weather",
   initialState,
   reducers: {
-    updateWeather(
+    updateCurrentWeather(
       state: WeatherState,
       action: PayloadAction<{
-        newWeather: Weather | undefined
+        currentWeather: CurrentWeather | undefined
       }>,
     ) {
-      state.weather = action.payload.newWeather ?? null
+      state.currentWeather = action.payload.currentWeather ?? null
+    },
+    updateHourlyWeather(
+      state: WeatherState,
+      action: PayloadAction<{
+        hourlyWeather: HourlyWeather | undefined
+      }>,
+    ) {
+      state.hourlyWeather = action.payload.hourlyWeather ?? null
     },
     updateWeatherApiError(
       state: WeatherState,
@@ -39,24 +49,39 @@ export const weatherSlice = createSlice({
   },
 })
 
-export const { updateWeather, updateWeatherApiError, updateCurrentTime } =
-  weatherSlice.actions
+export const {
+  updateCurrentWeather,
+  updateHourlyWeather,
+  updateWeatherApiError,
+  updateCurrentTime,
+} = weatherSlice.actions
 
 // API SLICE
 const meteoApiBaseUrl = "https://api.open-meteo.com/v1/forecast"
+
+const currentWeatherParams = [
+  "temperature_2m",
+  "relative_humidity_2m",
+  "apparent_temperature",
+  "is_day",
+  "precipitation",
+  "weather_code",
+  "wind_speed_10m",
+]
 
 export const weatherApi = createApi({
   reducerPath: "weatherApi",
   baseQuery: fetchBaseQuery({ baseUrl: meteoApiBaseUrl }),
   tagTypes: ["weather"],
   endpoints: builder => ({
-    getWeatherForBerlin: builder.query<Weather, void>({
-      query: () => `?latitude=52.5244&longitude=13.4105&hourly=temperature_2m`,
+    getCurrentWeatherForBerlin: builder.query<CurrentWeather, void>({
+      query: () =>
+        `?latitude=52.5244&longitude=13.4105&current=${currentWeatherParams.map(param => param + ",")}`,
       onQueryStarted: async (_, { queryFulfilled, dispatch }) => {
         try {
           const { data } = await queryFulfilled
           // hand data to store if successful
-          dispatch(updateWeather({ newWeather: data }))
+          dispatch(updateCurrentWeather({ currentWeather: data }))
           dispatch(updateWeatherApiError({ isApiError: false }))
         } catch (error) {
           console.error("An error occured while fetching weather api: ", error)
@@ -64,7 +89,43 @@ export const weatherApi = createApi({
         }
       },
     }),
-    getWeatherByCoords: builder.query<Weather, { lat: number; long: number }>({
+    getCurrentWeatherByCoords: builder.query<
+      CurrentWeather,
+      { lat: number; long: number }
+    >({
+      query: coords =>
+        `?latitude=${coords.lat}&longitude=${coords.long}&current=${currentWeatherParams.map(param => param + ",")}`,
+      providesTags: ["weather"],
+      onQueryStarted: async (_, { queryFulfilled, dispatch }) => {
+        try {
+          const { data } = await queryFulfilled
+          // hand data to store if successful
+          dispatch(updateCurrentWeather({ currentWeather: data }))
+          dispatch(updateWeatherApiError({ isApiError: false }))
+        } catch (error) {
+          console.error("An error occured while fetching weather api: ", error)
+          dispatch(updateWeatherApiError({ isApiError: false }))
+        }
+      },
+    }),
+    getHourlyWeatherForBerlin: builder.query<HourlyWeather, void>({
+      query: () => `?latitude=52.5244&longitude=13.4105&hourly=temperature_2m`,
+      onQueryStarted: async (_, { queryFulfilled, dispatch }) => {
+        try {
+          const { data } = await queryFulfilled
+          // hand data to store if successful
+          dispatch(updateHourlyWeather({ hourlyWeather: data }))
+          dispatch(updateWeatherApiError({ isApiError: false }))
+        } catch (error) {
+          console.error("An error occured while fetching weather api: ", error)
+          dispatch(updateWeatherApiError({ isApiError: false }))
+        }
+      },
+    }),
+    getHourlyWeatherByCoords: builder.query<
+      HourlyWeather,
+      { lat: number; long: number }
+    >({
       query: coords =>
         `?latitude=${coords.lat}&longitude=${coords.long}&hourly=temperature_2m`,
       providesTags: ["weather"],
@@ -72,7 +133,7 @@ export const weatherApi = createApi({
         try {
           const { data } = await queryFulfilled
           // hand data to store if successful
-          dispatch(updateWeather({ newWeather: data }))
+          dispatch(updateHourlyWeather({ hourlyWeather: data }))
           dispatch(updateWeatherApiError({ isApiError: false }))
         } catch (error) {
           console.error("An error occured while fetching weather api: ", error)
@@ -83,5 +144,9 @@ export const weatherApi = createApi({
   }),
 })
 
-export const { useGetWeatherForBerlinQuery, useGetWeatherByCoordsQuery } =
-  weatherApi
+export const {
+  useGetCurrentWeatherForBerlinQuery,
+  useGetCurrentWeatherByCoordsQuery,
+  useGetHourlyWeatherForBerlinQuery,
+  useGetHourlyWeatherByCoordsQuery,
+} = weatherApi

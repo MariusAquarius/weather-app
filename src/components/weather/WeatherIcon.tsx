@@ -13,42 +13,40 @@ import {
 
 export type WeatherType = "sunny" | "rainy" | "cloudy" | "windy"
 
-export type DayTime = "day" | "night"
-
 type WeatherIconProps = {
   weatherType: WeatherType
-  dayTime: DayTime
+  isDay: boolean
   size?: number
 }
 
 export default function WeatherIcon({
   weatherType,
-  dayTime,
+  isDay,
   size = 80,
 }: WeatherIconProps): ReactElement {
   function getIcon(): ReactElement | null {
-    if (weatherType === "sunny" && dayTime === "day") {
+    if (weatherType === "sunny" && isDay) {
       return <WiDaySunny size={size} />
     }
-    if (weatherType === "rainy" && dayTime === "day") {
+    if (weatherType === "rainy" && isDay) {
       return <WiDayRain size={size} />
     }
-    if (weatherType === "cloudy" && dayTime === "day") {
+    if (weatherType === "cloudy" && isDay) {
       return <WiDayCloudy size={size} />
     }
-    if (weatherType === "windy" && dayTime === "day") {
+    if (weatherType === "windy" && isDay) {
       return <WiDayWindy size={size} />
     }
-    if (weatherType === "sunny" && dayTime === "night") {
+    if (weatherType === "sunny" && !isDay) {
       return <WiNightClear size={size} />
     }
-    if (weatherType === "rainy" && dayTime === "night") {
+    if (weatherType === "rainy" && !isDay) {
       return <WiNightRain size={size} />
     }
-    if (weatherType === "cloudy" && dayTime === "night") {
+    if (weatherType === "cloudy" && !isDay) {
       return <WiNightCloudy size={size} />
     }
-    if (weatherType === "windy" && dayTime === "night") {
+    if (weatherType === "windy" && !isDay) {
       return <WiWindy size={size} />
     }
     return null

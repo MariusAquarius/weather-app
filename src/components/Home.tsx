@@ -1,11 +1,11 @@
 import React, { ReactElement } from "react"
-import { useGetWeatherForBerlinQuery } from "../lib/redux"
+import { useGetCurrentWeatherForBerlinQuery } from "../lib/redux"
 import WeatherContent from "./weather/WeatherContent"
 import Header from "./lib/Header"
 import { Separator } from "./shadcn/ui/separator"
 
 export default function Home(): ReactElement {
-  const { isLoading } = useGetWeatherForBerlinQuery()
+  const { isLoading } = useGetCurrentWeatherForBerlinQuery()
 
   return (
     <div className="min-h-screen flex flex-col">
