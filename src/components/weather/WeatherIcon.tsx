@@ -51,6 +51,5 @@ export default function WeatherIcon({
     }
     return null
   }
-
   return <>{getIcon()}</>
 }

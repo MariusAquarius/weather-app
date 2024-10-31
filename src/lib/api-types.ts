@@ -38,6 +38,7 @@ export type CurrentWeatherContent = {
   weather_code: WMOCode
   wind_speed_10m: number
   wind_gusts_10m: number
+  precipitation_probability: number
 }
 
 export type CurrentWeatherAttributes = {

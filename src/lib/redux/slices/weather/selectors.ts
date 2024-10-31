@@ -51,6 +51,10 @@ export const selectCurrentWindGusts = (state: ReduxState): number | null =>
 export const selectCurrentWindDirection = (state: ReduxState): number | null =>
   selectCurrent(state)?.wind_speed_10m ?? null
 
+export const selectCurrentPrecipitationProbability = (
+  state: ReduxState,
+): number | null => selectCurrent(state)?.precipitation_probability ?? null
+
 export const selectIsCurrentlyDay = (state: ReduxState): boolean | null => {
   const isDay = selectCurrent(state)?.is_day
   if (isDay !== undefined) return Boolean(isDay)

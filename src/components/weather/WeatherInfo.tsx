@@ -23,28 +23,38 @@ export default function WeatherInfo(): ReactElement {
   //const windDirection: number | null = useSelector(selectCurrentWindDirection)
 
   return (
-    <div className="flex flex-col h-full w-[50vw] justify-start">
-      <div>
-        <span className="text-light-gray">Feels like: </span>
-        <Temperature>{apparentTemperature}</Temperature>
-      </div>
-      <div>
-        <span className="text-light-gray">Humidity: </span>
-        <Humidity>{humidity}</Humidity>
-      </div>
-      <div>
-        <span className="text-light-gray">Precepitation: </span>
-        <Rainfall>{precipitation}</Rainfall>
-      </div>
-      <div>
-        <span className="text-light-gray">Wind speed: </span>
-        <Velocity>{windSpeed}</Velocity>
-        <span className="text-gray"> (10m above ground)</span>
-      </div>
-      <div>
-        <span className="text-light-gray">Wind gusts: </span>
-        <Velocity>{windGusts}</Velocity>
-        <span className="text-gray"> (10m above ground)</span>
+    <div className="flex h-full w-[50vw] justify-center lg:justify-start">
+      <div className="flex flex-row gap-4 md:gap-12">
+        <div className="flex flex-col justify-center lg:justify-start gap-2">
+          <span className="text-light-gray">Feels like: </span>
+          <span className="text-light-gray">Humidity: </span>
+          <span className="text-light-gray">Precepitation: </span>
+          <span className="text-light-gray">
+            Wind speed
+            <span className="text-gray"> (^10m) </span>:
+          </span>
+          <span className="text-light-gray">
+            Wind gusts
+            <span className="text-gray"> (^10m) </span>:
+          </span>
+        </div>
+        <div className="flex flex-col justify-end gap-2 text-right">
+          <div>
+            <Temperature>{apparentTemperature}</Temperature>
+          </div>
+          <div>
+            <Humidity>{humidity}</Humidity>
+          </div>
+          <div>
+            <Rainfall>{precipitation}</Rainfall>
+          </div>
+          <div>
+            <Velocity>{windSpeed}</Velocity>
+          </div>
+          <div>
+            <Velocity>{windGusts}</Velocity>
+          </div>
+        </div>
       </div>
     </div>
   )
