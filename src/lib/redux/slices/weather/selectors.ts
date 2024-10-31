@@ -18,9 +18,6 @@ export const selectWeatherState = (state: ReduxState): WeatherState =>
 export const hasWeatherApiError = (state: ReduxState): boolean =>
   selectWeatherState(state).isApiError
 
-export const selectCurrentTime = (state: ReduxState): number =>
-  selectWeatherState(state).time
-
 export const selectCurrentWeather = (
   state: ReduxState,
 ): CurrentWeather | null => selectWeatherState(state).currentWeather
@@ -104,6 +101,3 @@ export const selectTemperatureByTime =
       return null
     }
   }
-
-export const selectTemperatureNow = (state: ReduxState): number | null =>
-  selectTemperatureByTime(selectCurrentTime(state))(state) ?? null

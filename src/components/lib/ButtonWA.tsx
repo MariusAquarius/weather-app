@@ -4,19 +4,19 @@ import Spinner from "./Spinner"
 
 type ButtonProps = {
   isLoading?: boolean
-  disabled?: boolean
+  isDisabled?: boolean
   onClick?: () => void
 }
 
 export default function ButtonWA({
   isLoading,
-  disabled,
+  isDisabled,
   onClick,
   children,
 }: PropsWithChildren<ButtonProps>): ReactElement {
   return (
     <Button
-      disabled={isLoading || disabled}
+      disabled={isLoading || isDisabled}
       onClick={onClick}
       variant="secondary"
       className="bg-light-gray h-12"

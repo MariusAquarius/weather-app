@@ -43,9 +43,6 @@ export const weatherSlice = createSlice({
     ) {
       state.isApiError = action.payload.isApiError
     },
-    updateCurrentTime(state: WeatherState) {
-      state.time = Date.now()
-    },
   },
 })
 
@@ -53,7 +50,6 @@ export const {
   updateCurrentWeather,
   updateHourlyWeather,
   updateWeatherApiError,
-  updateCurrentTime,
 } = weatherSlice.actions
 
 // API SLICE

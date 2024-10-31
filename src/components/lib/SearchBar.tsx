@@ -1,8 +1,22 @@
-import React, { ReactElement } from "react"
+import React, { ChangeEvent, ReactElement } from "react"
 import { Input } from "../shadcn/ui/input"
 import { Search } from "lucide-react"
+import {
+  selectSearchTerm,
+  updateSearchTerm,
+  useDispatch,
+  useSelector,
+} from "../../lib/redux"
 
 export default function SearchBar(): ReactElement {
+  const dispatch = useDispatch()
+  const searchValue = useSelector(selectSearchTerm) ?? ""
+
+  function handleSearchValueChange(event: ChangeEvent<HTMLInputElement>) {
+    const searchTerm = event.target.value
+    dispatch(updateSearchTerm({ searchTerm }))
+  }
+
   return (
     <div className="flex items-center gap-2">
       <Search className="w-8 h-8" />
@@ -13,7 +27,9 @@ export default function SearchBar(): ReactElement {
           focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-0
         `}
         type="text"
+        value={searchValue}
         placeholder="Search for your city..."
+        onChange={handleSearchValueChange}
       ></Input>
     </div>
   )
