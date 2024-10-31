@@ -1,4 +1,4 @@
-import { CityInfo } from "@/src/lib/api-types"
+import { CityInfo, Coordinates } from "@/src/lib/api-types"
 import { ReduxState } from "../../store"
 import { CityState } from "./city-slice"
 
@@ -25,11 +25,12 @@ export const selectCityName = (state: ReduxState): string | null =>
 export const selectCountry = (state: ReduxState): string | null =>
   selectCity(state)?.country ?? null
 
-export const selectLongitude = (state: ReduxState): number | null =>
-  selectCity(state)?.long ?? null
-
-export const selectLatitude = (state: ReduxState): number | null =>
-  selectCity(state)?.lat ?? null
+export const selectCoordinates = (state: ReduxState): Coordinates => {
+  return {
+    long: selectCity(state)?.long ?? 0,
+    lat: selectCity(state)?.lat ?? 0,
+  }
+}
 
 export const selectDoesCityDataExist = (state: ReduxState): boolean | null =>
   selectCityName(state) ? true : false

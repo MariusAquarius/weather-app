@@ -35,6 +35,9 @@ export default function WeatherContent({
     }
   }
 
+  //add useEffect to check if geoapi has been triggered and then lazy trigger weather api
+  //also check if weather api is loading here to replace isLoading prop
+
   return (
     <div className="flex flex-col lg:flex-row min-h-[50vh] items-center justify-center gap-2 lg:gap-10 px-40">
       {getWeatherContent()}

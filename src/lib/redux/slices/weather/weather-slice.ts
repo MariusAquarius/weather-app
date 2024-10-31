@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
-import { CurrentWeather, HourlyWeather } from "../../../api-types"
+import { Coordinates, CurrentWeather, HourlyWeather } from "../../../api-types"
 
 // REDUX SLICE
 export type WeatherState = {
@@ -88,10 +88,7 @@ export const weatherApi = createApi({
         }
       },
     }),
-    getCurrentWeatherByCoords: builder.query<
-      CurrentWeather,
-      { lat: number; long: number }
-    >({
+    getCurrentWeatherByCoords: builder.query<CurrentWeather, Coordinates>({
       query: coords =>
         `?latitude=${coords.lat}&longitude=${coords.long}&current=${weatherApiParams.map(param => param + ",")}`,
       providesTags: ["weather"],
@@ -145,7 +142,7 @@ export const weatherApi = createApi({
 
 export const {
   useGetCurrentWeatherForBerlinQuery,
-  useGetCurrentWeatherByCoordsQuery,
+  useLazyGetCurrentWeatherByCoordsQuery,
   useGetHourlyWeatherForBerlinQuery,
   useGetHourlyWeatherByCoordsQuery,
 } = weatherApi

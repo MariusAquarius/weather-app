@@ -60,9 +60,11 @@ export type CurrentWeatherAttributes = {
 }
 
 //misc
-export type CityInfo = {
+export type Coordinates = {
   long: number | null
   lat: number | null
+}
+export type CityInfo = Coordinates & {
   city: string | null
   country: string | null
 }

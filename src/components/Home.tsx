@@ -1,15 +1,10 @@
 import React, { ReactElement } from "react"
-import {
-  selectDoesCityDataExist,
-  useGetCurrentWeatherForBerlinQuery,
-  useSelector,
-} from "../lib/redux"
+import { selectDoesCityDataExist, useSelector } from "../lib/redux"
 import WeatherContent from "./weather/WeatherContent"
 import Header from "./lib/Header"
 import { Separator } from "./shadcn/ui/separator"
 
 export default function Home(): ReactElement {
-  const { isLoading } = useGetCurrentWeatherForBerlinQuery()
   const isCityExisting = useSelector(selectDoesCityDataExist)
 
   return (
@@ -18,7 +13,7 @@ export default function Home(): ReactElement {
       <div className="px-14">
         <Separator orientation="horizontal" className="bg-dark-gray" />
       </div>
-      <WeatherContent isDisabled={!isCityExisting} isLoading={isLoading} />
+      <WeatherContent isDisabled={!isCityExisting} />
     </div>
   )
 }
