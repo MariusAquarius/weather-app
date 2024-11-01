@@ -1,6 +1,7 @@
-import { CityInfo, Coordinates } from "@/src/lib/api-types"
+import { CityInfo } from "@/src/lib/api-types"
 import { ReduxState } from "../../store"
 import { CityState } from "./city-slice"
+import { createSelector } from "@reduxjs/toolkit"
 
 export const selectCityState = (state: ReduxState): CityState => state.city
 
@@ -25,12 +26,17 @@ export const selectCityName = (state: ReduxState): string | null =>
 export const selectCountry = (state: ReduxState): string | null =>
   selectCity(state)?.country ?? null
 
-export const selectCoordinates = (state: ReduxState): Coordinates => {
+export const selectCoordinates = createSelector([selectCity], city => {
   return {
-    long: selectCity(state)?.long ?? 0,
-    lat: selectCity(state)?.lat ?? 0,
+    long: city?.long ?? null,
+    lat: city?.lat ?? null,
   }
-}
+})
+
+export const selectAreCoordinates = createSelector(
+  [selectCity],
+  city => !!(city?.long && city?.lat),
+)
 
 export const selectDoesCityDataExist = (state: ReduxState): boolean | null =>
   selectCityName(state) ? true : false
