@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react"
+import React, { ReactElement, SyntheticEvent } from "react"
 import ButtonWA from "./ButtonWA"
 import {
   useDispatch,
@@ -20,11 +20,16 @@ export default function Header(): ReactElement {
 
   const [triggerGeoApi, { isLoading }] = useLazyGetCoordinatesOfCityQuery()
 
-  function handleSearchButtonClick(): void {
+  function handleSearchButtonActivated(): void {
     if (isSearchValue && isSearchTermUpdated) {
       dispatch(updateLastSearched({ lastSearched: searchTerm }))
     }
     triggerGeoApi(searchTerm)
+  }
+
+  function handleSubmit(event: SyntheticEvent) {
+    event.preventDefault()
+    handleSearchButtonActivated()
   }
 
   function getButtonContent(): ReactElement {
@@ -47,14 +52,19 @@ export default function Header(): ReactElement {
 
   return (
     <header className="flex flex-row min-h-[20vh] items-center justify-center gap-8">
-      <SearchBar />
-      <ButtonWA
-        isLoading={isLoading}
-        isDisabled={!isSearchValue}
-        onClick={handleSearchButtonClick}
+      <form
+        className="contents"
+        onSubmit={(event: SyntheticEvent) => handleSubmit(event)}
       >
-        {getButtonContent()}
-      </ButtonWA>
+        <SearchBar />
+        <ButtonWA
+          isLoading={isLoading}
+          isDisabled={!isSearchValue}
+          onClick={handleSearchButtonActivated}
+        >
+          {getButtonContent()}
+        </ButtonWA>
+      </form>
     </header>
   )
 }
