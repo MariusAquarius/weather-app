@@ -12,7 +12,8 @@
     "prettier": "prettier --write src/*",
     "prettier:check": "prettier --check src/*",
     "prepare": "husky install",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "test:e2e": "npx playwright test"
   },
   "dependencies": {
     "@radix-ui/react-separator": "^1.1.0",
