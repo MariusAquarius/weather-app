@@ -51,7 +51,7 @@ export default function Header(): ReactElement {
   }
 
   return (
-    <header className="flex flex-row min-h-[20vh] items-center justify-center gap-8">
+    <header className="flex flex-col md:flex-row min-h-[20vh] items-center justify-center gap-8">
       <form
         className="contents"
         onSubmit={(event: SyntheticEvent) => handleSubmit(event)}

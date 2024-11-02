@@ -1,6 +1,5 @@
 import React, { ChangeEvent, ReactElement } from "react"
 import { Input } from "../shadcn/ui/input"
-import { Search } from "lucide-react"
 import {
   selectSearchTerm,
   updateSearchTerm,
@@ -18,8 +17,7 @@ export default function SearchBar(): ReactElement {
   }
 
   return (
-    <div className="flex items-center gap-2">
-      <Search className="w-8 h-8" />
+    <div className="flex items-center">
       <Input
         className={`
           bg-black placeholder:text-light-gray h-12 min-w-80 text-md 

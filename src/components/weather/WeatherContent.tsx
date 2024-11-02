@@ -31,18 +31,21 @@ export default function WeatherContent({
 
   function getWeatherContent(): ReactElement {
     if (isDisabled) {
-      return <div className="text-xl">Please enter a search value</div>
+      return (
+        <div className="text-xl text-center">Please enter a search value</div>
+      )
     } else if (isLoading) {
       return <Spinner size="xl" />
     } else {
       return (
         <div className="flex flex-col items-center justify-center gap-8">
-          <div className="text-xl">
-            Weather in {city}, {country}
+          <div className="text-xl text-center">
+            <span className="text-light-gray">Weather in</span> {city},{" "}
+            {country}
           </div>
           <div className="flex flex-col lg:flex-row gap-2 lg:gap-10">
             <WeatherPreview />
-            <div className="h-[20vh] hidden lg:block">
+            <div className="h-[12vh] hidden lg:block">
               <Separator orientation="vertical" className="bg-dark-gray" />
             </div>
             <WeatherInfo />
