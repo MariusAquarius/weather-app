@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test"
+import { test, expect, Response } from "@playwright/test"
 import { HomePageObject } from "./page-objects/home.page"
 import { SearchBarPageObject } from "./page-objects/search-bar.page"
 import { WeatherContentPageObject } from "./page-objects/weather-content.page"
@@ -21,21 +21,28 @@ test("is search button enabled with at least 3 characters", async () => {
   expect(await searchBar.isButtonDisabled()).toBe(false)
 })
 
-test("is api fetch success", async ({ page }) => {
-  await searchBar.enterSearchValue("berlin")
-  await searchBar.clickSearchButton()
+test.describe("tests after api fetch", async () => {
+  let response: Response
 
-  const response = await page.waitForResponse(response =>
-    response.url().includes("/v1/forecast"),
-  )
-  expect(response.status()).toBe(200)
-})
+  test.beforeEach(async ({ page }) => {
+    await searchBar.enterSearchValue("berlin")
+    await searchBar.clickSearchButton()
 
-test("is weather content rendered after successful fetch", async ({ page }) => {
-  await searchBar.enterSearchValue("berlin")
-  await searchBar.clickSearchButton()
+    response = await page.waitForResponse(response =>
+      response.url().includes("/v1/forecast"),
+    )
+  })
 
-  const weatherContent = new WeatherContentPageObject(page)
-  const weatherText = await weatherContent.getWeatherContentHeadlineText()
-  expect(weatherText).toContain("Berlin, Germany")
+  test("is api fetch successful", async () => {
+    expect(response.status()).toBe(200)
+  })
+
+  test("is weather content rendered after successful fetch", async ({
+    page,
+  }) => {
+    const weatherContent = new WeatherContentPageObject(page)
+    const weatherText = await weatherContent.getWeatherContentHeadlineText()
+
+    expect(weatherText).toContain("Berlin, Germany")
+  })
 })
