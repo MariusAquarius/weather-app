@@ -8,8 +8,10 @@ export const selectCityState = (state: ReduxState): CityState => state.city
 export const selectSearchTerm = (state: ReduxState): string | null =>
   selectCityState(state).searchTerm
 
-export const selectIsSearchValue = (state: ReduxState): boolean =>
-  selectSearchTerm(state) ? true : false
+export const selectIsSearchValue = (state: ReduxState): boolean => {
+  const searchTerm = selectSearchTerm(state) ?? ""
+  return searchTerm.length >= 3 ? true : false
+}
 
 export const selectLastSearched = (state: ReduxState): string | null =>
   selectCityState(state).lastSearched

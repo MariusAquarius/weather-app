@@ -6,6 +6,7 @@ type ButtonProps = {
   isLoading?: boolean
   isDisabled?: boolean
   onClick?: () => void
+  "data-testid"?: string
 }
 
 export default function ButtonWA({
@@ -13,6 +14,7 @@ export default function ButtonWA({
   isDisabled,
   onClick,
   children,
+  "data-testid": dataTestId,
 }: PropsWithChildren<ButtonProps>): ReactElement {
   return (
     <Button
@@ -20,6 +22,7 @@ export default function ButtonWA({
       onClick={onClick}
       variant="secondary"
       className="bg-light-gray h-12"
+      data-testid={dataTestId}
     >
       {isLoading ? <Spinner /> : null}
       {children}

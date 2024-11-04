@@ -39,7 +39,10 @@ export default function WeatherContent({
     } else {
       return (
         <div className="flex flex-col items-center justify-center gap-8">
-          <div className="text-xl text-center">
+          <div
+            className="text-xl text-center"
+            data-testid="weather-content-headline"
+          >
             <span className="text-light-gray">Weather in</span> {city},{" "}
             {country}
           </div>
@@ -62,7 +65,10 @@ export default function WeatherContent({
   }, [coordinates])
 
   return (
-    <div className="flex flex-col min-h-[50vh] items-center justify-center px-40">
+    <div
+      className="flex flex-col min-h-[50vh] items-center justify-center px-40"
+      data-testid="app-weather-content"
+    >
       {getWeatherContent()}
     </div>
   )

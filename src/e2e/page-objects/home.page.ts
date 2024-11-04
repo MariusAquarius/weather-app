@@ -1,19 +1,21 @@
-import { Page } from "@playwright/test"
-import { HeaderPageObject } from "./header.page"
-import { WeatherContentPageObject } from "./weather-content.page"
+import { Locator, Page } from "@playwright/test"
 
 export class HomePageObject {
   readonly page: Page
-  readonly header: HeaderPageObject
-  readonly weatherContent: WeatherContentPageObject
 
-  constructor(
-    page: Page,
-    header: HomePageObject,
-    weatherContent: WeatherContentPageObject,
-  ) {
+  constructor(page: Page) {
     this.page = page
-    this.header = header
-    this.weatherContent = weatherContent
+  }
+
+  async goto(): Promise<void> {
+    await this.page.goto("/")
+  }
+
+  async getHeader(): Promise<Locator> {
+    return await this.page.getByTestId("app-header")
+  }
+
+  async getWeatherContent(): Promise<Locator> {
+    return await this.page.getByTestId("app-weather-content")
   }
 }

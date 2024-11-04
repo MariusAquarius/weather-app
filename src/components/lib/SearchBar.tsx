@@ -28,6 +28,7 @@ export default function SearchBar(): ReactElement {
         value={searchValue}
         placeholder="Search for your city..."
         onChange={handleSearchValueChange}
+        data-testid="header-search-input"
       ></Input>
     </div>
   )

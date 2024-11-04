@@ -51,7 +51,10 @@ export default function Header(): ReactElement {
   }
 
   return (
-    <header className="flex flex-col md:flex-row min-h-[20vh] items-center justify-center gap-8">
+    <header
+      className="flex flex-col md:flex-row min-h-[20vh] items-center justify-center gap-8"
+      data-testid="app-header"
+    >
       <form
         className="contents"
         onSubmit={(event: SyntheticEvent) => handleSubmit(event)}
@@ -61,6 +64,7 @@ export default function Header(): ReactElement {
           isLoading={isLoading}
           isDisabled={!isSearchValue}
           onClick={handleSearchButtonActivated}
+          data-testid="header-search-button"
         >
           {getButtonContent()}
         </ButtonWA>
