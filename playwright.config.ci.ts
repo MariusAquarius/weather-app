@@ -6,8 +6,9 @@ import { defineConfig, devices } from "@playwright/test"
 export default defineConfig({
   webServer: {
     command: "npm start",
-    port: 3000,
-    timeout: 150 * 1000,
+    url: "http://127.0.0.1:3000",
+    stdout: "ignore",
+    stderr: "pipe",
   },
   testDir: "./src/e2e",
   testMatch: /.*\.e2e\.ts/,
@@ -24,7 +25,7 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: "http://localhost:3000",
+    baseURL: "http://127.0.0.1:3000",
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: "on-first-retry",
