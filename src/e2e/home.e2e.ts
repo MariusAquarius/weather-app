@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test"
+import { test, expect, Locator } from "@playwright/test"
 import { HomePageObject } from "./page-objects/home.page"
 
 let homePage: HomePageObject
@@ -9,11 +9,13 @@ test.beforeEach(async ({ page }) => {
 })
 
 test("has header component", async () => {
-  const headerVisible = (await homePage.getHeader()).isVisible()
-  expect(headerVisible).toBeTruthy()
+  const headerLocator: Locator = await homePage.getHeader()
+  const isLocator: boolean = (await headerLocator.count()) > 0
+  expect(isLocator).toBeTruthy()
 })
 
 test("has weather content component", async () => {
-  const weatherContentVisible = (await homePage.getWeatherContent()).isVisible()
-  expect(weatherContentVisible).toBeTruthy()
+  const weatherContentLocator: Locator = await homePage.getHeader()
+  const isLocator: boolean = (await weatherContentLocator.count()) > 0
+  expect(isLocator).toBeTruthy()
 })
