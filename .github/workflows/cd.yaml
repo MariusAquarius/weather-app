@@ -55,7 +55,7 @@ jobs:
       # run e2e
       - name: PlayWright Test
         run: |
-          npm run test:e2e:ci
+          npm run test:e2e
 
       # Upload artifact of current build
       - name: Upload build artifacts
