@@ -15,7 +15,7 @@ test("has header component", async () => {
 })
 
 test("has weather content component", async () => {
-  const weatherContentLocator: Locator = await homePage.getHeader()
+  const weatherContentLocator: Locator = await homePage.getWeatherContent()
   const isLocator: boolean = (await weatherContentLocator.count()) > 0
   expect(isLocator).toBeTruthy()
 })
