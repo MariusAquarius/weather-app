@@ -44,7 +44,7 @@ jobs:
       # run e2e
       - name: PlayWright Test
         run: |
-          npx playwright test
+          npm run test:e2e:ci
 
       # Upload artifact of current build
       - name: Upload build artifacts
@@ -54,7 +54,7 @@ jobs:
           path: ./build
 
   deploy:
-    # only deploy when PR has been merged to main branch & build job was successfully finished
+    # only deploy when feature branch was merged into main branch
     needs: build
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
