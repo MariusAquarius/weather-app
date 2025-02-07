@@ -1,6 +1,8 @@
 This project serves as a sample project showcasing a weather app made with
-React, TypeScript and Redux state management. It was initialized via
-[Create React App](https://github.com/facebook/create-react-app).
+React, TypeScript and Redux state management. It is build with Vite.
+
+You can see the current version of the main branch, deployed on GitHub pages:
+https://mariusaquarius.github.io/weather-app/
 
 ## Getting Started
 
