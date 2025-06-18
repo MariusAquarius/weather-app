@@ -8,7 +8,7 @@ export const selectCityState = (state: ReduxState): CityState => state.city
 export const selectSearchTerm = (state: ReduxState): string | null =>
   selectCityState(state).searchTerm
 
-export const selectIsSearchValue = (state: ReduxState): boolean => {
+export const selectIsSearchValueValid = (state: ReduxState): boolean => {
   const searchTerm: string = selectSearchTerm(state) ?? ""
   return searchTerm.length >= 3
 }
@@ -19,14 +19,18 @@ export const selectLastSearched = (state: ReduxState): string | null =>
 export const selectIsSearchTermUpdated = (state: ReduxState): boolean =>
   selectSearchTerm(state) !== selectLastSearched(state)
 
-export const selectCity = (state: ReduxState): City | null => {
+export const selectCityFromApi = (state: ReduxState): CityResponse | null => {
   const searchTerm: string | null = selectSearchTerm(state)
   if (searchTerm) {
-    const cityApiData: CityResponse | undefined =
-      cityApi.endpoints.getCoordinatesOfCity.select(searchTerm)(state).data
-    return cityApiData ? cityApiData.results[0] : null
+    return (
+      cityApi.endpoints.getCoordinatesOfCity.select(searchTerm)(state).data ??
+      null
+    )
   } else return null
 }
+
+export const selectCity = (state: ReduxState): City | null =>
+  selectCityFromApi(state)?.results[0] ?? null
 
 export const selectCityName = (state: ReduxState): string | null =>
   selectCity(state)?.name ?? null

@@ -3,25 +3,25 @@ import ButtonWA from "./ButtonWA"
 import {
   useDispatch,
   useSelector,
-  selectIsSearchValue,
+  selectIsSearchValueValid,
   selectIsSearchTermUpdated,
   selectSearchTerm,
   updateLastSearched,
   useLazyGetCoordinatesOfCityQuery,
-} from "../../lib/redux"
+} from "@lib/redux"
 import { RefreshCw, Search } from "lucide-react"
 import SearchBar from "./SearchBar"
 
 export default function Header(): ReactElement {
   const dispatch = useDispatch()
-  const isSearchValue = useSelector(selectIsSearchValue)
-  const searchTerm = useSelector(selectSearchTerm)
-  const isSearchTermUpdated = useSelector(selectIsSearchTermUpdated)
+  const isSearchValueValid: boolean = useSelector(selectIsSearchValueValid)
+  const searchTerm: string | null = useSelector(selectSearchTerm)
+  const isSearchTermUpdated: boolean = useSelector(selectIsSearchTermUpdated)
 
   const [triggerGeoApi, { isLoading }] = useLazyGetCoordinatesOfCityQuery()
 
   function handleSearchButtonActivated(): void {
-    if (searchTerm && isSearchValue && isSearchTermUpdated) {
+    if (searchTerm && isSearchValueValid && isSearchTermUpdated) {
       dispatch(updateLastSearched({ lastSearched: searchTerm }))
       triggerGeoApi(searchTerm)
     }
@@ -33,7 +33,7 @@ export default function Header(): ReactElement {
   }
 
   function getButtonContent(): ReactElement {
-    if (isSearchTermUpdated || !isSearchValue) {
+    if (isSearchTermUpdated || !isSearchValueValid) {
       return (
         <>
           <Search />
@@ -62,7 +62,7 @@ export default function Header(): ReactElement {
         <SearchBar />
         <ButtonWA
           isLoading={isLoading}
-          isDisabled={!isSearchValue}
+          isDisabled={!isSearchValueValid}
           onClick={handleSearchButtonActivated}
           data-testid="header-search-button"
         >
