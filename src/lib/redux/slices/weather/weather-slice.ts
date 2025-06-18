@@ -84,7 +84,7 @@ export const weatherApi = createApi({
           dispatch(updateCurrentWeather({ currentWeather: data }))
           dispatch(updateWeatherApiError({ isApiError: false }))
         } catch (error) {
-          console.error("An error occured while fetching weather api: ", error)
+          console.error("An error occurred while fetching weather api: ", error)
           dispatch(updateWeatherApiError({ isApiError: true }))
         }
       },
@@ -103,7 +103,7 @@ export const weatherApi = createApi({
           dispatch(updateHourlyWeather({ hourlyWeather: data }))
           dispatch(updateWeatherApiError({ isApiError: false }))
         } catch (error) {
-          console.error("An error occured while fetching weather api: ", error)
+          console.error("An error occurred while fetching weather api: ", error)
           dispatch(updateWeatherApiError({ isApiError: true }))
         }
       },

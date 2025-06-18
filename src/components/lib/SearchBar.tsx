@@ -5,7 +5,7 @@ import {
   updateSearchTerm,
   useDispatch,
   useSelector,
-} from "../../lib/redux"
+} from "@lib/redux"
 
 export default function SearchBar(): ReactElement {
   const dispatch = useDispatch()

@@ -9,7 +9,7 @@ export const selectSearchTerm = (state: ReduxState): string | null =>
   selectCityState(state).searchTerm
 
 export const selectIsSearchValue = (state: ReduxState): boolean => {
-  const searchTerm = selectSearchTerm(state) ?? ""
+  const searchTerm: string = selectSearchTerm(state) ?? ""
   return searchTerm.length >= 3
 }
 

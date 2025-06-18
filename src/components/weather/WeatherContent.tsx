@@ -23,7 +23,7 @@ export default function WeatherContent({
   const country: string | null = useSelector(selectCountry)
   const coordinates: Coordinates | null = useSelector(selectCoordinates)
 
-  const [triggerWeatherApi, { isLoading }] =
+  const [triggerWeatherApi, { isFetching }] =
     useLazyGetCurrentWeatherByCoordsQuery()
 
   function getWeatherContent(): ReactElement {
@@ -31,7 +31,7 @@ export default function WeatherContent({
       return (
         <div className="text-xl text-center">Please enter a search value</div>
       )
-    } else if (isLoading) {
+    } else if (isFetching) {
       return <Spinner size="xl" />
     } else {
       return (
