@@ -1,12 +1,13 @@
 import {
   CardinalDirection,
+  Coordinates,
   CurrentWeather,
   CurrentWeatherContent,
   HourlyWeather,
   HourlyWeatherContent,
   WMOCode,
 } from "@lib/api-types"
-import { ReduxState } from "@lib/redux"
+import { ReduxState, selectCoordinates, weatherApi } from "@lib/redux"
 import { WeatherState } from "@lib/redux/slices/weather/weather-slice"
 import { getDirection } from "./utils"
 
@@ -14,17 +15,26 @@ import { getDirection } from "./utils"
 export const selectWeatherState = (state: ReduxState): WeatherState =>
   state.weather
 
-//curent weather
+//current weather
 export const hasWeatherApiError = (state: ReduxState): boolean =>
   selectWeatherState(state).isApiError
 
-export const selectCurrentWeather = (
+export const selectCurrentWeatherFromApi = (
   state: ReduxState,
-): CurrentWeather | null => selectWeatherState(state).currentWeather
+): CurrentWeather | null => {
+  const coordinates: Coordinates | null = selectCoordinates(state)
+  if (coordinates) {
+    return (
+      weatherApi.endpoints.getCurrentWeatherByCoords.select(coordinates)(state)
+        .data ?? null
+    )
+  } else return null
+}
 
 export const selectCurrent = (
   state: ReduxState,
-): CurrentWeatherContent | null => selectCurrentWeather(state)?.current ?? null
+): CurrentWeatherContent | null =>
+  selectCurrentWeatherFromApi(state)?.current ?? null
 
 export const selectCurrentTemperature = (state: ReduxState): number | null =>
   selectCurrent(state)?.temperature_2m ?? null
@@ -72,18 +82,26 @@ export const selectIsCurrentlyDay = (state: ReduxState): boolean | null => {
 }
 
 // hourly weather
-export const selectHourlyWeather = (state: ReduxState): HourlyWeather | null =>
-  selectWeatherState(state).hourlyWeather
-
-export const selectHourlyObject = (
+export const selectHourlyWeatherFromApi = (
   state: ReduxState,
-): HourlyWeatherContent | null => selectHourlyWeather(state)?.hourly ?? null
+): HourlyWeather | null => {
+  const coordinates: Coordinates | null = selectCoordinates(state)
+  if (coordinates) {
+    return (
+      weatherApi.endpoints.getHourlyWeatherByCoords.select(coordinates)(state)
+        .data ?? null
+    )
+  } else return null
+}
+
+export const selectHourly = (state: ReduxState): HourlyWeatherContent | null =>
+  selectHourlyWeatherFromApi(state)?.hourly ?? null
 
 export const selectHourlyTimeTable = (state: ReduxState): string[] | null =>
-  selectHourlyObject(state)?.time ?? null
+  selectHourly(state)?.time ?? null
 
 export const selectHourlyTemperatures = (state: ReduxState): number[] | null =>
-  selectHourlyObject(state)?.temperature_2m ?? null
+  selectHourly(state)?.temperature_2m ?? null
 
 export const selectTemperatureByTime =
   (currentTime: number) =>

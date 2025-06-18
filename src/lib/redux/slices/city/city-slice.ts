@@ -59,7 +59,7 @@ export const cityApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: meteoGeoApiBaseUrl }),
   tagTypes: ["city"],
   endpoints: builder => ({
-    getCoordinatesOfCity: builder.query<CityResponse, string | null>({
+    getCoordinatesOfCity: builder.query<CityResponse, string>({
       query: cityName =>
         `?${geoApiParams.map(param => param + "&")}name=${cityName}`,
       onQueryStarted: async (_, { queryFulfilled, dispatch }) => {
@@ -67,7 +67,7 @@ export const cityApi = createApi({
           await queryFulfilled
           dispatch(updateCityApiError({ isApiError: false }))
         } catch (error) {
-          console.error("An error occured while fetching geo api: ", error)
+          console.error("An error occurred while fetching geo api: ", error)
           dispatch(updateCityApiError({ isApiError: true }))
         }
       },

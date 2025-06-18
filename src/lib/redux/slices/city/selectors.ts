@@ -21,9 +21,11 @@ export const selectIsSearchTermUpdated = (state: ReduxState): boolean =>
 
 export const selectCity = (state: ReduxState): City | null => {
   const searchTerm: string | null = selectSearchTerm(state)
-  const cityApiData: CityResponse | undefined =
-    cityApi.endpoints.getCoordinatesOfCity.select(searchTerm)(state).data
-  return cityApiData ? cityApiData.results[0] : null
+  if (searchTerm) {
+    const cityApiData: CityResponse | undefined =
+      cityApi.endpoints.getCoordinatesOfCity.select(searchTerm)(state).data
+    return cityApiData ? cityApiData.results[0] : null
+  } else return null
 }
 
 export const selectCityName = (state: ReduxState): string | null =>

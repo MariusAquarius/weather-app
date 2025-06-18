@@ -21,10 +21,10 @@ export default function Header(): ReactElement {
   const [triggerGeoApi, { isLoading }] = useLazyGetCoordinatesOfCityQuery()
 
   function handleSearchButtonActivated(): void {
-    if (isSearchValue && isSearchTermUpdated) {
+    if (searchTerm && isSearchValue && isSearchTermUpdated) {
       dispatch(updateLastSearched({ lastSearched: searchTerm }))
+      triggerGeoApi(searchTerm)
     }
-    triggerGeoApi(searchTerm)
   }
 
   function handleSubmit(event: SyntheticEvent) {
