@@ -1,11 +1,12 @@
 import React, { ReactElement } from "react"
-import { selectDoesCityDataExist, useSelector } from "../lib/redux"
+import { selectCity, useSelector } from "@lib/redux"
 import WeatherContent from "./weather/WeatherContent"
 import Header from "./lib/Header"
 import { Separator } from "./shadcn/ui/separator"
+import { City } from "@lib/api-types"
 
 export default function Home(): ReactElement {
-  const isCityExisting = useSelector(selectDoesCityDataExist)
+  const city: City | null = useSelector(selectCity)
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -13,7 +14,7 @@ export default function Home(): ReactElement {
       <div className="px-14">
         <Separator orientation="horizontal" className="bg-dark-gray" />
       </div>
-      <WeatherContent isDisabled={!isCityExisting} />
+      <WeatherContent isDisabled={!city} />
     </div>
   )
 }

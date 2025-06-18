@@ -4,14 +4,13 @@ import Spinner from "../lib/Spinner"
 import WeatherPreview from "./WeatherPreview"
 import WeatherInfo from "./WeatherInfo"
 import {
-  selectAreCoordinates,
   selectCityName,
   selectCoordinates,
   selectCountry,
   useLazyGetCurrentWeatherByCoordsQuery,
   useSelector,
-} from "../../lib/redux"
-import { Coordinates } from "../../lib/api-types"
+} from "@/src/lib/redux"
+import { Coordinates } from "@/src/lib/api-types"
 
 type WeatherContentProps = {
   isDisabled?: boolean
@@ -22,9 +21,7 @@ export default function WeatherContent({
 }: WeatherContentProps): ReactElement {
   const city: string | null = useSelector(selectCityName)
   const country: string | null = useSelector(selectCountry)
-
-  const areCoordinates: boolean = useSelector(selectAreCoordinates)
-  const coordinates: Coordinates = useSelector(selectCoordinates)
+  const coordinates: Coordinates | null = useSelector(selectCoordinates)
 
   const [triggerWeatherApi, { isLoading }] =
     useLazyGetCurrentWeatherByCoordsQuery()
@@ -59,7 +56,7 @@ export default function WeatherContent({
   }
 
   useEffect(() => {
-    if (areCoordinates) {
+    if (coordinates) {
       triggerWeatherApi(coordinates)
     }
   }, [coordinates])

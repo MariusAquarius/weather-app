@@ -5,9 +5,9 @@ import {
   HourlyWeather,
   HourlyWeatherContent,
   WMOCode,
-} from "../../../api-types"
-import { ReduxState } from "../../store"
-import { WeatherState } from "./weather-slice"
+} from "@lib/api-types"
+import { ReduxState } from "@lib/redux"
+import { WeatherState } from "@lib/redux/slices/weather/weather-slice"
 import { getDirection } from "./utils"
 
 // general

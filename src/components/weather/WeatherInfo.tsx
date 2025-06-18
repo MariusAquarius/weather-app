@@ -9,7 +9,7 @@ import {
   selectCurrentWindGusts,
   selectCurrentWindSpeed,
   useSelector,
-} from "../../lib/redux"
+} from "@lib/redux"
 import { Rainfall } from "../lib/Rainfall"
 import { Velocity } from "../lib/Velocity"
 import { CardinalDirection } from "@/src/lib/api-types"
@@ -33,7 +33,7 @@ export default function WeatherInfo(): ReactElement {
         <div className="flex flex-col justify-center lg:justify-start gap-2">
           <span className="text-light-gray">Feels like</span>
           <span className="text-light-gray">Humidity</span>
-          <span className="text-light-gray">Precepitation</span>
+          <span className="text-light-gray">Precipitation</span>
           <span className="text-light-gray flex gap-2">
             Wind speed
             <div className="text-gray flex gap-1">

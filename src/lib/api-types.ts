@@ -15,9 +15,11 @@ export type Weather = HourlyWeather | CurrentWeather
 export type CityResponse = {
   results: City[]
 }
-export type City = {
+export type Coordinates = {
   longitude: number
   latitude: number
+}
+export type City = Coordinates & {
   name: string
   country: string
 }
@@ -60,15 +62,6 @@ export type CurrentWeatherAttributes = {
 }
 
 //misc
-export type Coordinates = {
-  long: number | null
-  lat: number | null
-}
-export type CityInfo = Coordinates & {
-  city: string | null
-  country: string | null
-}
-
 export type TempUnits = "°C" | "°F"
 export type TimeZone = "GMT" | "UST" | "CEST"
 export type CardinalDirection =

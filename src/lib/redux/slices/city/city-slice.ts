@@ -1,4 +1,4 @@
-import { CityResponse, CityInfo } from "../../../../lib/api-types"
+import { CityResponse } from "@lib/api-types"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
@@ -7,18 +7,11 @@ export type CityState = {
   searchTerm: string | null
   lastSearched: string | null
   isApiError: boolean
-  city: CityInfo
 }
 const initialState: CityState = {
   searchTerm: null,
   lastSearched: null,
   isApiError: false,
-  city: {
-    long: null,
-    lat: null,
-    city: null,
-    country: null,
-  },
 }
 
 export const citySlice = createSlice({
@@ -50,23 +43,11 @@ export const citySlice = createSlice({
     ) {
       state.isApiError = action.payload.isApiError
     },
-    updateCityInfo(
-      state: CityState,
-      action: PayloadAction<{
-        cityInfo: CityInfo
-      }>,
-    ) {
-      state.city = action.payload.cityInfo
-    },
   },
 })
 
-export const {
-  updateSearchTerm,
-  updateLastSearched,
-  updateCityApiError,
-  updateCityInfo,
-} = citySlice.actions
+export const { updateSearchTerm, updateLastSearched, updateCityApiError } =
+  citySlice.actions
 
 // API SLICE
 const meteoGeoApiBaseUrl = "https://geocoding-api.open-meteo.com/v1/search"
@@ -83,19 +64,7 @@ export const cityApi = createApi({
         `?${geoApiParams.map(param => param + "&")}name=${cityName}`,
       onQueryStarted: async (_, { queryFulfilled, dispatch }) => {
         try {
-          const { data } = await queryFulfilled
-          // hand data to store if successful
-          dispatch(
-            updateCityInfo({
-              cityInfo: {
-                long: data.results[0].longitude,
-                lat: data.results[0].latitude,
-                city: data.results[0].name,
-                country: data.results[0].country,
-              },
-            }),
-          )
-
+          await queryFulfilled
           dispatch(updateCityApiError({ isApiError: false }))
         } catch (error) {
           console.error("An error occured while fetching geo api: ", error)
